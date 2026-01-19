@@ -309,7 +309,7 @@ function App() {
           {/* Argumentos de Valor - Dashboard Preview */}
           <section className="py-24 px-6 md:px-20 bg-dark-lighter">
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-              <div>
+              <div className="text-left">
                 <h2 className="text-4xl mb-8">Sua gestão no <span className="text-primary">piloto automático.</span></h2>
                 <ul className="space-y-6">
                   <li className="flex gap-4">
@@ -349,28 +349,79 @@ function App() {
             </div>
           </section>
 
-          {/* Social Proof - Depoimento */}
-          <section className="py-24 px-6 md:px-20 bg-dark text-center">
-            <div className="max-w-4xl mx-auto glass p-12 border-primary/20">
-              <div className="text-accent mb-6 flex justify-center gap-1">
-                {[1, 2, 3, 4, 5].map(i => <svg key={i} className="h-6 w-6 fill-accent" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" /></svg>)}
-              </div>
-              <p className="text-2xl italic leading-relaxed mb-8">"O SOUNDSTAGE mudou meu jogo. Antes eu perdia horas cobrando bar e mandando vídeo no WhatsApp. Hoje eu só mando meu link e o booking acontece sozinho."</p>
-              <div className="flex items-center justify-center gap-4">
-                <img src="/artist-thumb.png" className="w-16 h-16 rounded-full border-2 border-primary" alt="Artist" />
-                <div className="text-left">
-                  <h4 className="font-bold">Cassidy Rae</h4>
-                  <p className="text-sm text-gray-500">Cantora Country • 120 shows via app</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* CTA Final */}
           <section className="py-24 px-6 md:px-20 text-center bg-gradient-to-b from-dark to-primary/20">
             <h2 className="text-4xl md:text-6xl font-black mb-8">Pronto para o próximo nível?</h2>
             <button onClick={() => setView('register-artist')} className="btn-primary text-xl px-12 py-5 shadow-2xl shadow-primary/50">Criar meu perfil gratuito</button>
             <p className="mt-6 text-gray-500 text-sm italic">Não pedimos cartão de crédito para começar.</p>
+          </section>
+        </main>
+      </div>
+    )
+  }
+
+  if (view === 'landing-bar') {
+    return (
+      <div className="min-h-screen bg-dark text-white font-sans flex flex-col">
+        {/* Nav Simplificada */}
+        <nav className="p-6 flex justify-between items-center border-b border-white/5 bg-dark/50 backdrop-blur-md sticky top-0 z-50">
+          <div onClick={() => setView('landing')} className="text-2xl font-display font-bold cursor-pointer">SOUNDSTAGE</div>
+          <button onClick={() => setView('landing')} className="text-sm text-gray-400 hover:text-white transition-colors">← Voltar</button>
+        </nav>
+
+        <main className="flex-grow">
+          {/* Hero Bar */}
+          <section className="py-24 px-6 md:px-20 text-center relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-accent/10 blur-[120px] rounded-full -z-10"></div>
+
+            <span className="text-accent font-bold uppercase tracking-widest text-sm mb-6 block">Para Bares e Restaurantes</span>
+            <h1 className="text-5xl md:text-8xl font-black mb-8 leading-tight">Sua casa sempre cheia, <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-primary">sem riscos.</span></h1>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">Acesse os melhores artistas da região, gerencie agenda em segundos e garanta que o show nunca pare.</p>
+
+            <button onClick={() => setView('register-bar')} className="btn-accent text-xl px-12 py-5 text-dark">Turbinar meu bar agora</button>
+          </section>
+
+          {/* Argumentos de Valor - Search Preview */}
+          <section className="py-24 px-6 md:px-20 bg-dark-lighter">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+              <div className="order-2 md:order-1 relative group text-left">
+                <div className="absolute -inset-4 bg-accent/20 rounded-3xl blur-2xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
+                <img src="/bar-dashboard.png" className="relative rounded-2xl shadow-2xl border border-white/10" alt="Busca de Artistas" />
+              </div>
+
+              <div className="order-1 md:order-2 text-left">
+                <h2 className="text-4xl mb-8">O fim da <span className="text-accent">contratação no escuro.</span></h2>
+                <ul className="space-y-6">
+                  <li className="flex gap-4">
+                    <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center mt-1">
+                      <div className="w-2 h-2 rounded-full bg-accent"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">Curadoria por Avaliação Real</h4>
+                      <p className="text-gray-400">Contrate artistas validados por outros bares. Veja vídeos e repertório atualizado.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center mt-1">
+                      <div className="w-2 h-2 rounded-full bg-accent"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg text-red-400">Botão de Pânico</h4>
+                      <p className="text-gray-400">O artista cancelou? Nosso sistema encontra músicos disponíveis próximos em minutos.</p>
+                    </div>
+                  </li>
+                  <li className="flex gap-4">
+                    <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center mt-1">
+                      <div className="w-2 h-2 rounded-full bg-accent"></div>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-lg">Central de Mídia</h4>
+                      <p className="text-gray-400">Baixe o kit de divulgação pronto pro seu Instagram. Sem perder tempo editando post.</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </section>
         </main>
       </div>
