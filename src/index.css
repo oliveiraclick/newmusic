@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #8B5CF6;
+  --color-primary-dark: #6D28D9;
+  --color-primary-light: #A78BFA;
+
+  --color-accent: #F59E0B;
+  --color-accent-dark: #D97706;
+
+  --color-dark: #111827;
+  --color-dark-lighter: #1F2937;
+  --color-dark-card: rgba(17, 24, 39, 0.7);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-dark);
+    color: white;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    /* Letras menos finas */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    /* Títulos mais robustos */
+  }
+}
+
+@utility glass {
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+}
+
+@utility btn-primary {
+  @apply px-8 py-3 transition-all duration-300 rounded-full font-bold shadow-lg hover:scale-105;
+  background-color: var(--color-primary);
+  box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3);
+
+  &:hover {
+    background-color: var(--color-primary-dark);
+  }
+}
+
+@utility btn-secondary {
+  @apply px-8 py-3 transition-all duration-300 rounded-full font-bold backdrop-blur-sm hover:scale-105;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+@utility btn-accent {
+  @apply px-8 py-3 transition-all duration-300 rounded-full font-bold shadow-lg hover:scale-105;
+  background-color: var(--color-accent);
+  color: var(--color-dark);
+  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3);
+
+  &:hover {
+    background-color: var(--color-accent-dark);
+  }
+}
+
+@utility animate-bounce-slow {
+  animation: bounce-slow 3s infinite;
+}
+
+@utility animate-music-1 {
+  animation: music-bar 0.6s ease-in-out infinite;
+}
+
+@utility animate-music-2 {
+  animation: music-bar 0.8s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+@utility animate-music-3 {
+  animation: music-bar 0.7s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes music-bar {
+
+  0%,
+  100% {
+    height: 4px;
+  }
+
+  50% {
+    height: 12px;
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
