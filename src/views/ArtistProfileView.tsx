@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Artist, ViewState } from '../types';
 
 interface ArtistProfileViewProps {
@@ -6,6 +7,8 @@ interface ArtistProfileViewProps {
 }
 
 export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({ artists, setView }) => {
+    const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+
     return (
         <div className="min-h-screen bg-dark text-white font-sans selection:bg-accent selection:text-dark">
             {/* Dynamic Header with Scroll Effect Mockup */}
@@ -41,7 +44,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({ artists, s
                             <div className="flex items-center gap-8 text-gray-400">
                                 <div className="flex flex-col">
                                     <span className="text-[10px] font-black uppercase tracking-widest text-accent/60">Gênero</span>
-                                    <span className="text-lg font-bold text-white">Rock / Pop / Indie</span>
+                                    <span className="text-lg font-bold text-white">{artists[0].genre}</span>
                                 </div>
                                 <div className="h-8 w-px bg-white/10"></div>
                                 <div className="flex flex-col">
@@ -95,7 +98,7 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({ artists, s
                             <h2 className="text-5xl font-black italic">A Alma do Rock <br /> <span className="text-white">Mineiro.</span></h2>
                         </div>
                         <p className="text-xl text-gray-400 leading-relaxed font-light">
-                            Com mais de 10 anos de estrada e passagens pelos maiores festivais do Brasil, Jack Wild traz uma experiência imersiva que mistura o peso do rock clássico com as texturas do indie moderno. Conhecido pela performance explosiva e o domínio vocal único, Jack transformou casas noturnas, ventos corporativos e casamentos de luxo em verdadeiras arenas de rock.
+                            {artists[0].bio || 'Nenhuma biografia disponível no momento. Jack Wild é um dos artistas mais requisitados da plataforma, conhecidos pela performance impecável e carisma único.'}
                         </p>
                         <div className="flex flex-wrap gap-4">
                             {['Gibson Les Paul Custom', 'Marshall Amplification', 'Shure Wireless Syst.', 'Banda Completa', 'Acústico Solo'].map(tag => (
@@ -149,22 +152,42 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({ artists, s
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {[
-                            { id: '1', title: 'Sunset Live Session', url: 'https://images.unsplash.com/photo-1549213821-4708d624e1d1?q=80&w=1932&auto=format&fit=crop' },
-                            { id: '2', title: 'Original: "Neon Thunder"', url: 'https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?q=80&w=2076&auto=format&fit=crop' }
-                        ].map(video => (
-                            <div key={video.id} className="group relative aspect-video rounded-[32px] overflow-hidden border border-white/10">
-                                <img src={video.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={video.title} />
-                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                                    <div className="w-20 h-20 bg-accent text-dark rounded-full flex items-center justify-center shadow-2xl scale-90 group-hover:scale-100 transition-transform">
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                        {(artists[0].videos && artists[0].videos.length > 0) ? artists[0].videos.map((videoUrl, idx) => {
+                            const videoId = videoUrl.includes('v=') ? videoUrl.split('v=')[1]?.split('&')[0] : videoUrl.split('/').pop()?.split('?')[0];
+                            const thumbUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+
+                            return (
+                                <div
+                                    key={idx}
+                                    onClick={() => setSelectedVideo(videoUrl)}
+                                    className="group relative aspect-video rounded-[32px] overflow-hidden border border-white/10 cursor-pointer"
+                                >
+                                    <img src={thumbUrl} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
+                                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                        <div className="w-20 h-20 bg-accent text-dark rounded-full flex items-center justify-center shadow-2xl scale-90 group-hover:scale-100 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="absolute bottom-8 left-8">
-                                    <h4 className="text-2xl font-black text-white">{video.title}</h4>
+                            );
+                        }) : (
+                            [
+                                { id: '1', title: 'Sunset Live Session', url: 'https://images.unsplash.com/photo-1549213821-4708d624e1d1?q=80&w=1932&auto=format&fit=crop' },
+                                { id: '2', title: 'Original: "Neon Thunder"', url: 'https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?q=80&w=2076&auto=format&fit=crop' }
+                            ].map(video => (
+                                <div key={video.id} className="group relative aspect-video rounded-[32px] overflow-hidden border border-white/10">
+                                    <img src={video.url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={video.title} />
+                                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                                        <div className="w-20 h-20 bg-accent text-dark rounded-full flex items-center justify-center shadow-2xl scale-90 group-hover:scale-100 transition-transform">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                        </div>
+                                    </div>
+                                    <div className="absolute bottom-8 left-8">
+                                        <h4 className="text-2xl font-black text-white">{video.title}</h4>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </div>
                 </section>
 
@@ -248,6 +271,29 @@ export const ArtistProfileView: React.FC<ArtistProfileViewProps> = ({ artists, s
                     </div>
                 </div>
             </footer>
+
+            {/* Video Lightbox Modal */}
+            {selectedVideo && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
+                    <div onClick={() => setSelectedVideo(null)} className="absolute inset-0 bg-dark/95 backdrop-blur-3xl"></div>
+                    <div className="relative w-full max-w-5xl aspect-video rounded-[40px] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(255,191,0,0.2)] animate-in zoom-in-95 duration-300">
+                        <button
+                            onClick={() => setSelectedVideo(null)}
+                            className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-2xl flex items-center justify-center z-20 backdrop-blur-md transition-colors"
+                        >
+                            ✕
+                        </button>
+                        <iframe
+                            className="w-full h-full"
+                            src={selectedVideo.replace('watch?v=', 'embed/') + '?autoplay=1'}
+                            title="Video Player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

@@ -53,13 +53,10 @@ function App() {
     '2026-02-28': { contractor: 'Sunset Rooftop', time: '18:30' }
   })
   const [marketplaceItems] = useState(MARKETPLACE_ITEMS)
-
-  // Checkout flow inputs
-  const [checkoutDate, setCheckoutDate] = useState('2026-03-15')
-  const [checkoutTime, setCheckoutTime] = useState('20:00')
+  const [balance, setBalance] = useState(12450.00)
 
   const monthNames = MONTH_NAMES
-  const artists = ARTISTS
+  const [artists, setArtists] = useState(ARTISTS)
 
   const nextArtist = () => setCurrentArtistIndex((prev) => (prev + 1) % artists.length)
   const prevArtist = () => setCurrentArtistIndex((prev) => (prev - 1 + artists.length) % artists.length)
@@ -116,7 +113,13 @@ function App() {
   }
 
   if (view === 'mini-profile') {
-    return <MiniProfileView artists={artists} setView={setView} />
+    return (
+      <MiniProfileView
+        artists={artists}
+        setView={setView}
+        blockedDates={blockedDates}
+      />
+    )
   }
 
   if (view === 'dashboard-contractor') {
@@ -140,11 +143,25 @@ function App() {
         calendarDate={calendarDate}
         setCalendarDate={setCalendarDate}
         blockedDates={blockedDates}
+        setBlockedDates={setBlockedDates}
         financialRecords={financialRecords}
+        setFinancialRecords={setFinancialRecords}
+        bookingDetails={bookingDetails}
+        setBookingDetails={setBookingDetails}
         monthNames={monthNames}
+        isAgendaModalOpen={isAgendaModalOpen}
         setIsAgendaModalOpen={setIsAgendaModalOpen}
+        selectedAgendaDate={selectedAgendaDate}
         setSelectedAgendaDate={setSelectedAgendaDate}
+        agendaModalStep={agendaModalStep}
         setAgendaModalStep={setAgendaModalStep}
+        externalCacheValue={externalCacheValue}
+        setExternalCacheValue={setExternalCacheValue}
+        externalContractorName={externalContractorName}
+        setExternalContractorName={setExternalContractorName}
+        balance={balance}
+        setBalance={setBalance}
+        setArtists={setArtists}
         marketplaceItems={marketplaceItems}
       />
     )

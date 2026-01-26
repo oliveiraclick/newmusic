@@ -66,6 +66,8 @@ export interface Artist {
     vibes: string[];
     packages: Package[];
     rating?: string;
+    bio?: string;
+    videos?: string[];
 }
 
 export interface MarketplaceItem {
